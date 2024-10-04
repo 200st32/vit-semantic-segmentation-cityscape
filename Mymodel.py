@@ -38,14 +38,15 @@ class ViTForSemanticSegmentation(nn.Module):
         patch_embeddings = outputs.last_hidden_state[:,1:,:]
         # convert to logits and upsample to the size of the pixel values
         logits = self.classifier(patch_embeddings)
-        #logits = nn.functional.interpolate(logits, size=pixel_values.shape[2:], mode="bilinear", align_corners=False) 
+        logits = nn.functional.interpolate(logits, size=pixel_values.shape[2:], mode="bilinear", align_corners=False) 
+        '''
         logits = nn.functional.interpolate(
             logits,
             size=labels.shape[-2:],
             mode="bilinear",
             align_corners=False,
         ) 
-
+        '''
 
         #print("logits shape: ", logits.size())
         #print("labels shape: ", labels.size())
@@ -64,9 +65,7 @@ class ViTForSemanticSegmentation(nn.Module):
         )
      
 
-def load_model(device, label_num=29):
-
-    mytoken = "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"
+def load_model(device, label_num=20):
 
     #vitmodel = timm.create_model('vit_small_patch16_224', pretrained=True)
     vitmodel = ViTModel.from_pretrained("google/vit-base-patch16-224-in21k")
