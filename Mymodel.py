@@ -65,7 +65,7 @@ class ViTForSemanticSegmentation(nn.Module):
         )
      
 
-def load_model(device, label_num=20):
+def load_model(device, label_num=29):
 
     #vitmodel = timm.create_model('vit_small_patch16_224', pretrained=True)
     vitmodel = ViTModel.from_pretrained("google/vit-base-patch16-224-in21k")
